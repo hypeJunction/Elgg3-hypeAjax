@@ -26,7 +26,7 @@ class DeferredViewController {
 		foreach ($payload as $key => $value) {
 			$unserialized = @unserialize($value);
 			if ($unserialized !== false) {
-				$payload[$key] = $value;
+				$payload[$key] = $unserialized;
 			}
 		}
 
