@@ -18,7 +18,7 @@ class Context {
 
 		$contexts = elgg_get_context_stack();
 		$input = _elgg_services()->request->getParams();
-		$input = array_filter($input, function($e) {
+		$input = array_filter($input, function ($e) {
 			return !is_null($e);
 		});
 		$viewtype = elgg_get_viewtype();
@@ -73,7 +73,9 @@ class Context {
 		elgg_set_page_owner_guid($page_owner_guid);
 
 		foreach ($input as $key => $value) {
-			$request->setParam($key, $value);
+			if (null === $request->getParam($key)) {
+				$request->setParam($key, $value);
+			}
 		}
 
 		return true;
