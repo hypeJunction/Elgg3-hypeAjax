@@ -1,3 +1,13 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/hypeJunctionPro/Elgg3-hypeAjax/compare/1.1.0...1.2.0) (2018-07-06)
+
+
+### Features
+
+* **forms:** adds promise-based ajax form api ([c056cb8](https://github.com/hypeJunctionPro/Elgg3-hypeAjax/commit/c056cb8))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/hypeJunctionPro/Elgg3-hypeAjax/compare/1.0.0...1.1.0) (2018-06-29)
 
