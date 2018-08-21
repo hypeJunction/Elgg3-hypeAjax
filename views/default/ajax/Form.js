@@ -73,7 +73,7 @@ define(function (require) {
 				.done(function (data, statusText, xhr) {
 					if (that.successCallbacks.length) {
 						for (var i in that.successCallbacks) {
-							that.successCallbacks[i].apply(that, data, statusText, xhr);
+							that.successCallbacks[i].apply(that, [data, statusText, xhr]);
 						}
 					} else {
 						$('body').trigger('click'); // hide all popups and lightboxes
@@ -85,7 +85,7 @@ define(function (require) {
 				.fail(function (statusText, xhr) {
 					if (that.errorCallbacks.length) {
 						for (var i in that.errorCallbacks) {
-							that.errorCallbacks[i].apply(that, statusText, xhr);
+							that.errorCallbacks[i].apply(that, [statusText, xhr]);
 						}
 					}
 
