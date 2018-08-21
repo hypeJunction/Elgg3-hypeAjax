@@ -1,3 +1,13 @@
+<a name="1.2.1"></a>
+## [1.2.1](https://github.com/hypeJunctionPro/Elgg3-hypeAjax/compare/1.2.0...1.2.1) (2018-08-21)
+
+
+### Bug Fixes
+
+* **forms:** correctly apply callback function arguments ([7a49bb1](https://github.com/hypeJunctionPro/Elgg3-hypeAjax/commit/7a49bb1))
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/hypeJunctionPro/Elgg3-hypeAjax/compare/1.1.0...1.2.0) (2018-07-06)
 
