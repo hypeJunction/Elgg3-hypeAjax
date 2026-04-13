@@ -1,3 +1,21 @@
+<a name="1.3.0"></a>
+# [1.3.0] — Elgg 4.x migration
+
+### Breaking Changes
+
+* Requires Elgg 4.0+ (was 3.x)
+* `PayloadItem` no longer implements `\Serializable`. Callers must use
+  `PayloadItem::encode()` / `PayloadItem::decode()` instead of PHP's
+  `serialize()` / `unserialize()`.
+
+### Changes
+
+* `Elgg\BadRequestException` → `Elgg\Exceptions\Http\BadRequestException`
+* `composer.json`: `elgg/elgg ^4.0`, `php >=7.4`, `composer/installers ^2.0`, psr-4 autoload
+* `manifest.xml` removed
+* Payload transport switched from PHP serialization to JSON encoding
+
+
 <a name="1.2.1"></a>
 ## [1.2.1](https://github.com/hypeJunctionPro/Elgg3-hypeAjax/compare/1.2.0...1.2.1) (2018-08-21)
 
