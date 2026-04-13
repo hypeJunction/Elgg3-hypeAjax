@@ -4,7 +4,7 @@
 	"description": "Ajax utilities",
 	"homepage": "http://hypejunction.com",
 	"keywords": [
-		"elgg", "plugin", "blog", "content"
+		"elgg", "plugin", "ajax"
 	],
 	"license": "proprietary",
 	"authors": [
@@ -13,16 +13,19 @@
 			"email": "info@hypejunction.com"
 		}
 	],
-	"extra": {
-		"installer-name": "hypeAjax"
-	},
 	"require": {
-		"php": ">=7.0",
-		"composer/installers": "~1.0"
+		"php": ">=7.4",
+		"elgg/elgg": "^4.0",
+		"composer/installers": "^2.0"
 	},
 	"autoload": {
-		"psr-0": {
-			"": "classes/"
+		"psr-4": {
+			"hypeJunction\\Ajax\\": "classes/hypeJunction/Ajax/"
+		}
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true
 		}
 	}
 }

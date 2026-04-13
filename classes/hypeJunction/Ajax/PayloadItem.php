@@ -5,7 +5,7 @@
 
 namespace hypeJunction\Ajax;
 
-class PayloadItem implements \Serializable {
+class PayloadItem {
 
 	/**
 	 * @var mixed
@@ -22,54 +22,60 @@ class PayloadItem implements \Serializable {
 	}
 
 	/**
-	 * Serializes event object for database storage
+	 * Encode an item to a JSON-safe transport string.
+	 *
+	 * ElggEntity/ElggData are represented by id+type+subtype so that the
+	 * full object can be re-hydrated server-side without round-tripping PHP
+	 * serialised objects through the browser.
+	 *
+	 * @param mixed $item
 	 * @return string
 	 */
-	public function serialize() {
+	public static function encode($item): string {
 		$data = new \stdClass();
-		if ($this->item instanceof \ElggData) {
-			if ($this->item instanceof \ElggEntity) {
-				$data->item_id = $this->item->guid;
+		if ($item instanceof \ElggData) {
+			if ($item instanceof \ElggEntity) {
+				$data->item_id = $item->guid;
 			} else {
-				$data->item_id = $this->item->id;
+				$data->item_id = $item->id;
 			}
-			$data->item_type = $this->item->getType();
-			$data->item_subtype = $this->item->getSubtype();
+			$data->item_type = $item->getType();
+			$data->item_subtype = $item->getSubtype();
 		} else {
-			$data->item = $this->item;
+			$data->item = $item;
 		}
 
-		return serialize($data);
+		return json_encode($data);
 	}
 
 	/**
-	 * Unserializes the event object stored in the database
+	 * Decode a transport string produced by encode() and return the item.
 	 *
-	 * @param string $serialized Serialized string
-	 * @return string
+	 * @param string $encoded
+	 * @return mixed
 	 */
-	public function unserialize($serialized) {
-		$data = unserialize($serialized);
+	public static function decode(string $encoded) {
+		$data = json_decode($encoded);
+		if ($data === null) {
+			return null;
+		}
 
 		if (isset($data->item_id) && isset($data->item_type)) {
 			switch ($data->item_type) {
-				case 'object' :
-				case 'user' :
-				case 'group' :
-				case 'site' :
-					$this->item = get_entity($data->item_id);
-					break;
-				case 'annotation' :
-					$this->item = elgg_get_annotation_from_id($data->item_id);
-					break;
-				case 'metadata' :
-					$this->item = elgg_get_metadata_from_id($data->item_id);
-					break;
-				case 'relationship' :
-					$this->item = get_relationship($data->item_id);
+				case 'object':
+				case 'user':
+				case 'group':
+				case 'site':
+					return get_entity($data->item_id);
+				case 'annotation':
+					return elgg_get_annotation_from_id($data->item_id);
+				case 'metadata':
+					return elgg_get_metadata_from_id($data->item_id);
+				case 'relationship':
+					return get_relationship($data->item_id);
 			}
-		} else {
-			$this->item = $data->item;
 		}
+
+		return $data->item ?? null;
 	}
 }

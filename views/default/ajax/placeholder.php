@@ -13,10 +13,8 @@ if (!$placeholder && $placeholder !== false) {
 }
 
 $filter = function($e) use (&$filter) {
-	if ($e instanceof Serializable) {
-		$e = serialize($e);
-	} else if ($e instanceof ElggData) {
-		$e = serialize(new \hypeJunction\Ajax\PayloadItem($e));
+	if ($e instanceof \ElggData) {
+		$e = \hypeJunction\Ajax\PayloadItem::encode($e);
 	} else if (is_array($e)) {
 		$e = array_map($filter, $e);
 	}

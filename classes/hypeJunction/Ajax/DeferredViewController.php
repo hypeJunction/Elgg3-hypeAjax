@@ -2,7 +2,7 @@
 
 namespace hypeJunction\Ajax;
 
-use Elgg\BadRequestException;
+use Elgg\Exceptions\Http\BadRequestException;
 use Elgg\Http\ResponseFactory;
 use Elgg\Request;
 
@@ -24,9 +24,11 @@ class DeferredViewController {
 		$payload = $request->getParam('payload');
 
 		foreach ($payload as $key => $value) {
-			$unserialized = @unserialize($value);
-			if ($unserialized !== false) {
-				$payload[$key] = $unserialized;
+			if (is_string($value) && str_starts_with($value, '{')) {
+				$decoded = \hypeJunction\Ajax\PayloadItem::decode($value);
+				if ($decoded !== null) {
+					$payload[$key] = $decoded;
+				}
 			}
 		}
 
