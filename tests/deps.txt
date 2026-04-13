@@ -1,1 +1,0 @@
-# hypeajax is a leaf plugin — no sibling dependencies.
