@@ -2,6 +2,8 @@
 
 return [
 
+	'bootstrap' => \hypeJunction\Ajax\Bootstrap::class,
+
 	'routes' => [
 		'ajax:deferred' => [
 			'path' => '/_deferred/{view}',

@@ -1,18 +1,16 @@
 <?php
 
-use hypeJunction\Ajax\CapturePageContext;
-use hypeJunction\Ajax\DeferViewRendering;
+namespace hypeJunction\Ajax;
 
-require_once __DIR__ . '/autoloader.php';
+use Elgg\DefaultPluginBootstrap;
 
-return function () {
-	elgg_register_event_handler('init', 'system', function () {
+class Bootstrap extends DefaultPluginBootstrap {
 
+	public function init() {
 		elgg_extend_view('elgg.js', 'ajax/data/context.js');
 
 		elgg_register_plugin_hook_handler('elgg.data', 'page', CapturePageContext::class);
 
 		elgg_register_plugin_hook_handler('view_vars', 'all', DeferViewRendering::class);
-
-	});
-};
+	}
+}
