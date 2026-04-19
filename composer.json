@@ -4,7 +4,9 @@
 	"description": "Ajax utilities",
 	"homepage": "http://hypejunction.com",
 	"keywords": [
-		"elgg", "plugin", "ajax"
+		"elgg",
+		"plugin",
+		"ajax"
 	],
 	"license": "proprietary",
 	"authors": [
@@ -26,6 +28,11 @@
 	"config": {
 		"allow-plugins": {
 			"composer/installers": true
+		}
+	},
+	"extra": {
+		"elgg-plugin": {
+			"id": "hypeajax"
 		}
 	}
 }
