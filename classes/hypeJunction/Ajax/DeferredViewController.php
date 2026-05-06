@@ -6,6 +6,11 @@ use Elgg\Exceptions\Http\BadRequestException;
 use Elgg\Http\ResponseFactory;
 use Elgg\Request;
 
+/**
+ * Render a deferred view server-side after restoring the original page
+ * context, decoding any payload items, and returning the HTML to the
+ * client.
+ */
 class DeferredViewController {
 
 	/**

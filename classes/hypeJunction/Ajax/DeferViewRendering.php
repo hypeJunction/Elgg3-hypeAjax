@@ -4,6 +4,10 @@ namespace hypeJunction\Ajax;
 
 use Elgg\Hook;
 
+/**
+ * Replace a deferred view's output with a placeholder that the client
+ * resolves asynchronously via the /ajax/view endpoint.
+ */
 class DeferViewRendering {
 
 	/**

@@ -1,10 +1,13 @@
 <?php
-/**
- *
- */
 
 namespace hypeJunction\Ajax;
 
+/**
+ * Encode and decode payload items for transport between the server and
+ * the JS client. Elgg entities/data objects are reduced to id+type+subtype
+ * triples so the receiver can re-hydrate them server-side without
+ * round-tripping serialised PHP through the browser.
+ */
 class PayloadItem {
 
 	/**
@@ -28,7 +31,8 @@ class PayloadItem {
 	 * full object can be re-hydrated server-side without round-tripping PHP
 	 * serialised objects through the browser.
 	 *
-	 * @param mixed $item
+	 * @param mixed $item Item to encode
+	 *
 	 * @return string
 	 */
 	public static function encode($item): string {
@@ -39,6 +43,7 @@ class PayloadItem {
 			} else {
 				$data->item_id = $item->id;
 			}
+
 			$data->item_type = $item->getType();
 			$data->item_subtype = $item->getSubtype();
 		} else {
@@ -51,7 +56,8 @@ class PayloadItem {
 	/**
 	 * Decode a transport string produced by encode() and return the item.
 	 *
-	 * @param string $encoded
+	 * @param string $encoded Transport string produced by encode()
+	 *
 	 * @return mixed
 	 */
 	public static function decode(string $encoded) {

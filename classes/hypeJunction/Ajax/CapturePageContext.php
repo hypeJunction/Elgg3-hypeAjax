@@ -4,6 +4,11 @@ namespace hypeJunction\Ajax;
 
 use Elgg\Hook;
 
+/**
+ * Capture page-related context info on every page render so the client
+ * can echo it back when calling /data endpoints (used to verify request
+ * signatures and rebuild server-side context).
+ */
 class CapturePageContext {
 
 	/**

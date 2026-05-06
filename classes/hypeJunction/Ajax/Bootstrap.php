@@ -4,8 +4,14 @@ namespace hypeJunction\Ajax;
 
 use Elgg\DefaultPluginBootstrap;
 
+/**
+ * Plugin bootstrap — wires hooks/handlers for hypeAjax.
+ */
 class Bootstrap extends DefaultPluginBootstrap {
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function init() {
 		elgg_extend_view('elgg.js', 'ajax/data/context.js');
 

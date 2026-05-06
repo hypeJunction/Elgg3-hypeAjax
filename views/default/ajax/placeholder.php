@@ -36,7 +36,7 @@ $href = elgg_http_add_url_query_elements("_deferred/$view", [
 echo elgg_format_element('div', [
 	'class' => 'ajax-placeholder',
 	'data-src' => $href,
-], $placeholder ? : '');
+], $placeholder ?: '');
 
 ?>
 <script>

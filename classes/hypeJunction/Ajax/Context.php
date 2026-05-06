@@ -5,6 +5,11 @@ namespace hypeJunction\Ajax;
 use Elgg\Exceptions\Http\BadRequestException;
 use Elgg\Request;
 
+/**
+ * Capture and restore the page-render context (logged-in user, page owner,
+ * context stack, query params, viewtype) so /data endpoints can rebuild
+ * the server-side state and verify the request signature.
+ */
 class Context {
 
 	/**
@@ -66,19 +71,18 @@ class Context {
 		$mac = elgg_build_hmac($data);
 
 		if (!$mac->matchesToken($signature)) {
-			throw new BadRequestException("Request signature is invalid");
+			throw new BadRequestException('Request signature is invalid');
 		}
 
 		elgg_set_context_stack($contexts);
 		elgg_set_page_owner_guid($page_owner_guid);
 
 		foreach ($input as $key => $value) {
-			if (null === $request->getParam($key)) {
+			if ($request->getParam($key) === null) {
 				$request->setParam($key, $value);
 			}
 		}
 
 		return true;
 	}
-
 }
