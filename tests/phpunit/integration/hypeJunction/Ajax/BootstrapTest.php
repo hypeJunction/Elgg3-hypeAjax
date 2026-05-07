@@ -93,9 +93,52 @@ class BootstrapTest extends IntegrationTestCase {
 		$this->assertArrayHasKey('page', $handlers['elgg.data']);
 	}
 
+	public function testCapturePageContextHandlerRegistered() {
+		$registered = _elgg_services()->hooks->hasHandler('elgg.data', 'page', CapturePageContext::class);
+		$this->assertTrue($registered);
+	}
+
 	public function testViewVarsAllHookWired() {
 		$handlers = _elgg_services()->hooks->getAllHandlers();
 		$this->assertArrayHasKey('view_vars', $handlers);
 		$this->assertArrayHasKey('all', $handlers['view_vars']);
+	}
+
+	public function testDeferViewRenderingHandlerRegistered() {
+		$registered = _elgg_services()->hooks->hasHandler('view_vars', 'all', DeferViewRendering::class);
+		$this->assertTrue($registered);
+	}
+
+	// --- view extensions ---
+
+	public function testElggJsExtendedWithContextJs() {
+		// Bootstrap extends elgg.js with ajax/data/context.js so the client
+		// echoes captured context back on every /data request.
+		$views = _elgg_services()->views->getViewList('elgg.js');
+		$this->assertContains('ajax/data/context.js', $views);
+	}
+
+	public function testPlaceholderViewExists() {
+		// DeferViewRendering renders ajax/placeholder when a view is deferred.
+		$this->assertTrue(elgg_view_exists('ajax/placeholder'));
+	}
+
+	// --- route registration ---
+
+	public function testDeferredViewRouteRegistered() {
+		$route = _elgg_services()->routes->get('ajax:deferred');
+		$this->assertNotNull($route);
+		$this->assertSame('/_deferred/{view}', $route->getPath());
+	}
+
+	public function testDeferredViewRouteUsesController() {
+		$route = _elgg_services()->routes->get('ajax:deferred');
+		$this->assertSame(DeferredViewController::class, $route->getDefault('_controller'));
+	}
+
+	public function testDeferredViewRouteHasAjaxGatekeeper() {
+		$route = _elgg_services()->routes->get('ajax:deferred');
+		$middleware = (array) $route->getDefault('_middleware');
+		$this->assertContains(\Elgg\Router\Middleware\AjaxGatekeeper::class, $middleware);
 	}
 }
