@@ -2,7 +2,7 @@
 
 namespace hypeJunction\Ajax;
 
-use Elgg\HooksRegistrationService\Hook;
+use Elgg\Event;
 use Elgg\IntegrationTestCase;
 
 /**
@@ -22,14 +22,14 @@ class CapturePageContextTest extends IntegrationTestCase {
 
 	public function testHandlerInvokeReturnsHookValueArray() {
 		$handler = new CapturePageContext();
-		$hook = new Hook(elgg(), 'elgg.data', 'page', [], []);
+		$hook = new Event(elgg(), 'elgg.data', 'page', [], []);
 		$result = $handler($hook);
 		$this->assertIsArray($result);
 	}
 
 	public function testHandlerSetsContextKey() {
 		$handler = new CapturePageContext();
-		$hook = new Hook(elgg(), 'elgg.data', 'page', [], []);
+		$hook = new Event(elgg(), 'elgg.data', 'page', [], []);
 		$result = $handler($hook);
 		$this->assertArrayHasKey('context', $result);
 		$this->assertIsArray($result['context']);
@@ -37,14 +37,14 @@ class CapturePageContextTest extends IntegrationTestCase {
 
 	public function testHandlerPreservesExistingHookValueKeys() {
 		$handler = new CapturePageContext();
-		$hook = new Hook(elgg(), 'elgg.data', 'page', ['existing' => 'kept'], []);
+		$hook = new Event(elgg(), 'elgg.data', 'page', ['existing' => 'kept'], []);
 		$result = $handler($hook);
 		$this->assertSame('kept', $result['existing']);
 	}
 
 	public function testCapturedContextHasAllExpectedKeys() {
 		$handler = new CapturePageContext();
-		$hook = new Hook(elgg(), 'elgg.data', 'page', [], []);
+		$hook = new Event(elgg(), 'elgg.data', 'page', [], []);
 		$result = $handler($hook);
 		$context = $result['context'];
 		$expected = ['user', 'page_owner', 'context_stack', 'input', 'viewtype', 'ts', 'mac'];
@@ -57,7 +57,7 @@ class CapturePageContextTest extends IntegrationTestCase {
 		// The mac field signs the snapshot so /data endpoints can verify
 		// the client echoed back an unmodified context.
 		$handler = new CapturePageContext();
-		$hook = new Hook(elgg(), 'elgg.data', 'page', [], []);
+		$hook = new Event(elgg(), 'elgg.data', 'page', [], []);
 		$context = $handler($hook)['context'];
 
 		$payload = serialize([

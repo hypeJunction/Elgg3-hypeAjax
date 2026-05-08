@@ -2,7 +2,7 @@
 
 namespace hypeJunction\Ajax;
 
-use Elgg\Hook;
+use Elgg\Event;
 
 /**
  * Replace a deferred view's output with a placeholder that the client
@@ -19,7 +19,7 @@ class DeferViewRendering {
 	 *
 	 * @return array
 	 */
-	public function __invoke(Hook $hook) {
+	public function __invoke(Event $hook) {
 
 		$vars = $hook->getValue();
 

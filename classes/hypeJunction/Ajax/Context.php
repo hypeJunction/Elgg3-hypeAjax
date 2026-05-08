@@ -56,7 +56,7 @@ class Context {
 	 */
 	public static function restore(Request $request, $name = '__context') {
 
-		$logged_in_user_guid = $request->elgg()->session->getLoggedInUserGuid();
+		$logged_in_user_guid = $request->elgg()->session_manager->getLoggedInUserGuid();
 
 		$context = (array) $request->getParam($name, []);
 

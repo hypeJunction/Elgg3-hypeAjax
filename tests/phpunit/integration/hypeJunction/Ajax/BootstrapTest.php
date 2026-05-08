@@ -88,24 +88,24 @@ class BootstrapTest extends IntegrationTestCase {
 	// --- Bootstrap::init hook wiring ---
 
 	public function testElggDataPageHookWired() {
-		$handlers = _elgg_services()->hooks->getAllHandlers();
+		$handlers = _elgg_services()->events->getAllHandlers();
 		$this->assertArrayHasKey('elgg.data', $handlers);
 		$this->assertArrayHasKey('page', $handlers['elgg.data']);
 	}
 
 	public function testCapturePageContextHandlerRegistered() {
-		$registered = _elgg_services()->hooks->hasHandler('elgg.data', 'page', CapturePageContext::class);
+		$registered = _elgg_services()->events->hasHandler('elgg.data', 'page', CapturePageContext::class);
 		$this->assertTrue($registered);
 	}
 
 	public function testViewVarsAllHookWired() {
-		$handlers = _elgg_services()->hooks->getAllHandlers();
+		$handlers = _elgg_services()->events->getAllHandlers();
 		$this->assertArrayHasKey('view_vars', $handlers);
 		$this->assertArrayHasKey('all', $handlers['view_vars']);
 	}
 
 	public function testDeferViewRenderingHandlerRegistered() {
-		$registered = _elgg_services()->hooks->hasHandler('view_vars', 'all', DeferViewRendering::class);
+		$registered = _elgg_services()->events->hasHandler('view_vars', 'all', DeferViewRendering::class);
 		$this->assertTrue($registered);
 	}
 

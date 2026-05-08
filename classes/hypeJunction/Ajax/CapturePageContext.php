@@ -2,7 +2,7 @@
 
 namespace hypeJunction\Ajax;
 
-use Elgg\Hook;
+use Elgg\Event;
 
 /**
  * Capture page-related context info on every page render so the client
@@ -23,7 +23,7 @@ class CapturePageContext {
 	 *
 	 * @return array
 	 */
-	public function __invoke(Hook $hook) {
+	public function __invoke(Event $hook) {
 		$return = $hook->getValue();
 		$return['context'] = Context::capture();
 		return $return;

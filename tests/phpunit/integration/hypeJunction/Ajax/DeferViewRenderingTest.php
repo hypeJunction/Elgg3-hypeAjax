@@ -2,7 +2,7 @@
 
 namespace hypeJunction\Ajax;
 
-use Elgg\HooksRegistrationService\Hook;
+use Elgg\Event;
 use Elgg\IntegrationTestCase;
 
 /**
@@ -22,7 +22,7 @@ class DeferViewRenderingTest extends IntegrationTestCase {
 
 	public function testHandlerIsNoOpWhenDeferredFlagAbsent() {
 		$handler = new DeferViewRendering();
-		$hook = new Hook(elgg(), 'view_vars', 'navigation/menu', ['foo' => 'bar'], []);
+		$hook = new Event(elgg(), 'view_vars', 'navigation/menu', ['foo' => 'bar'], []);
 		$result = $handler($hook);
 		// Returning null/void leaves the view vars untouched.
 		$this->assertNull($result);
@@ -30,13 +30,13 @@ class DeferViewRenderingTest extends IntegrationTestCase {
 
 	public function testHandlerIsNoOpWhenDeferredFlagFalsy() {
 		$handler = new DeferViewRendering();
-		$hook = new Hook(elgg(), 'view_vars', 'navigation/menu', ['deferred' => false], []);
+		$hook = new Event(elgg(), 'view_vars', 'navigation/menu', ['deferred' => false], []);
 		$this->assertNull($handler($hook));
 	}
 
 	public function testHandlerStripsDeferredAndPlaceholderKeys() {
 		$handler = new DeferViewRendering();
-		$hook = new Hook(elgg(), 'view_vars', 'output/url', [
+		$hook = new Event(elgg(), 'view_vars', 'output/url', [
 			'deferred' => true,
 			'placeholder' => 'loading...',
 			'item_id' => 42,
@@ -51,7 +51,7 @@ class DeferViewRenderingTest extends IntegrationTestCase {
 
 	public function testHandlerWritesPlaceholderToViewOutput() {
 		$handler = new DeferViewRendering();
-		$hook = new Hook(elgg(), 'view_vars', 'output/url', [
+		$hook = new Event(elgg(), 'view_vars', 'output/url', [
 			'deferred' => true,
 			'placeholder' => 'loading...',
 			'item_id' => 42,
