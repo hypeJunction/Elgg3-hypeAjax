@@ -46,8 +46,7 @@ class PayloadItemTest extends IntegrationTestCase {
 	}
 
 	public function testEncodeEntityProducesIdTypeSubtypeTriple() {
-		$obj = new \ElggObject();
-		$obj->setSubtype('hypeajax_test_obj');
+		$obj = elgg_new_entity('object', 'hypeajax_test_obj');
 		$obj->save();
 		try {
 			$encoded = PayloadItem::encode($obj);
@@ -80,8 +79,7 @@ class PayloadItemTest extends IntegrationTestCase {
 	}
 
 	public function testDecodeEntityRoundTrip() {
-		$obj = new \ElggObject();
-		$obj->setSubtype('hypeajax_test_obj');
+		$obj = elgg_new_entity('object', 'hypeajax_test_obj');
 		$obj->save();
 		try {
 			$encoded = PayloadItem::encode($obj);
