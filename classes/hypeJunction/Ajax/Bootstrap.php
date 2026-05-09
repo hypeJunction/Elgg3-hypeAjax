@@ -13,7 +13,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 	 * {@inheritdoc}
 	 */
 	public function init(): void {
-		elgg_extend_view('elgg.js', 'ajax/data/context.js');
+		elgg_import_esm('ajax/data/context');
 
 		elgg_register_event_handler('elgg.data', 'page', CapturePageContext::class);
 

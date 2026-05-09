@@ -5,7 +5,7 @@ return [
 	'plugin' => [
 		'id' => 'hypeajax',
 		'name' => 'hypeAjax',
-		'version' => '5.0.0',
+		'version' => '6.0.0',
 		'description' => 'Ajax utilities for Elgg plugins.',
 		'author' => 'Ismayil Khayredinov',
 		'category' => 'utility',
