@@ -1,8 +1,7 @@
-require(['elgg'], function(elgg) {
+import { registerHandler } from 'elgg/events';
+import elgg from 'elgg';
 
-	elgg.register_hook_handler('ajax_request_data', 'all', function(hook, type, params, data) {
-		data.__context = elgg.data.context;
-		return data;
-	});
-
+registerHandler('ajax_request_data', 'all', function(hook, type, params, data) {
+	data.__context = elgg.data.context;
+	return data;
 });
