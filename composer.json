@@ -2,19 +2,13 @@
 	"name": "hypejunction/hypeajax",
 	"type": "elgg-plugin",
 	"description": "Ajax utilities",
-	"homepage": "http://hypejunction.com",
+	"homepage": "https://github.com/hypeJunction/Elgg3-hypeAjax",
 	"keywords": [
 		"elgg",
 		"plugin",
 		"ajax"
 	],
 	"license": "proprietary",
-	"authors": [
-		{
-			"name": "Ismayil Khayredinov",
-			"email": "info@hypejunction.com"
-		}
-	],
 	"require": {
 		"php": ">=7.4",
 		"elgg/elgg": "^4.0",

@@ -1,11 +1,11 @@
 {
 	"name": "hypeAjax",
 	"version": "1.2.1",
-	"license": "SEE LICENSE IN https://hypejunction.com/license",
+	"license": "proprietary",
 	"repository": {
 		"type": "git",
-		"url": "git@github.com:hypeJunctionPro/Elgg3-hypeAjax.git",
-		"owner": "hypeJunctionPro",
+		"url": "git@github.com:hypeJunction/Elgg3-hypeAjax.git",
+		"owner": "hypeJunction",
 		"repo": "Elgg3-hypeAjax"
 	},
 	"dependencies": {
