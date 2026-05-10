@@ -1,11 +1,10 @@
 hypeAjax
 ========
-![Elgg 4.x](https://img.shields.io/badge/Elgg-4.x-orange.svg?style=flat-square)
+![Elgg 7.x](https://img.shields.io/badge/Elgg-7.x-orange.svg?style=flat-square)
 
 Utilities for AJAX requests
 
 * Deferred view rendering
-
 
 ## Usage
 
@@ -51,7 +50,6 @@ form.onSubmit(function(resolve, reject) {
 	resolve();
 });
 
-
 // By default, once all promises are resolved, the form will be submitted via ajax,
 // and the user will be forwarded to the URL specified by the response
 // You can however register custom success callbacks to prevent redirection
@@ -73,3 +71,9 @@ form.onError(function(error) {
 });
 
 ```
+
+## Compatibility
+
+| Plugin version | Elgg version |
+|---|---|
+| current | 7.x |
