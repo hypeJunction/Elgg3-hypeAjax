@@ -37,8 +37,8 @@ class DeferredViewController {
 			}
 		}
 
-		$output = elgg_view($view, $payload);
+		$output = \elgg_view($view, $payload);
 
-		return elgg_ok_response($output);
+		return \elgg_ok_response($output);
 	}
 }

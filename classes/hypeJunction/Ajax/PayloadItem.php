@@ -74,9 +74,9 @@ class PayloadItem {
 				case 'site':
 					return get_entity($data->item_id);
 				case 'annotation':
-					return elgg_get_annotation_from_id($data->item_id);
+					return \elgg_get_annotation_from_id($data->item_id);
 				case 'metadata':
-					return elgg_get_metadata_from_id($data->item_id);
+					return \elgg_get_metadata_from_id($data->item_id);
 				case 'relationship':
 					return get_relationship($data->item_id);
 			}

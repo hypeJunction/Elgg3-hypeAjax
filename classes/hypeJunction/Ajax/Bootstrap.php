@@ -13,10 +13,10 @@ class Bootstrap extends DefaultPluginBootstrap {
 	 * {@inheritdoc}
 	 */
 	public function init(): void {
-		elgg_import_esm('ajax/data/context');
+		\elgg_import_esm('ajax/data/context');
 
-		elgg_register_event_handler('elgg.data', 'page', CapturePageContext::class);
+		\elgg_register_event_handler('elgg.data', 'page', CapturePageContext::class);
 
-		elgg_register_event_handler('view_vars', 'all', DeferViewRendering::class);
+		\elgg_register_event_handler('view_vars', 'all', DeferViewRendering::class);
 	}
 }

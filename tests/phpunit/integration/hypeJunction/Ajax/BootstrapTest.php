@@ -26,15 +26,15 @@ class BootstrapTest extends IntegrationTestCase {
 	// --- plugin lifecycle ---
 
 	public function testPluginIsRegistered() {
-		$this->assertInstanceOf(\ElggPlugin::class, elgg_get_plugin_from_id('hypeajax'));
+		$this->assertInstanceOf(\ElggPlugin::class, \elgg_get_plugin_from_id('hypeajax'));
 	}
 
 	public function testPluginIsEnabled() {
-		$this->assertTrue(elgg_get_plugin_from_id('hypeajax')->isEnabled());
+		$this->assertTrue(\elgg_get_plugin_from_id('hypeajax')->isEnabled());
 	}
 
 	public function testPluginIsActive() {
-		$this->assertTrue(elgg_get_plugin_from_id('hypeajax')->isActive());
+		$this->assertTrue(\elgg_get_plugin_from_id('hypeajax')->isActive());
 	}
 
 	// --- migration invariants (no start.php, declarative bootstrap) ---
@@ -43,12 +43,12 @@ class BootstrapTest extends IntegrationTestCase {
 		// Elgg 4.x fatals on plugin activation if start.php is present.
 		// The 3.x migration removed it — pin its absence so the file
 		// doesn't sneak back in via cherry-pick or revert.
-		$pluginPath = elgg_get_plugin_from_id('hypeajax')->getPath();
+		$pluginPath = \elgg_get_plugin_from_id('hypeajax')->getPath();
 		$this->assertFileDoesNotExist($pluginPath . 'start.php');
 	}
 
 	public function testBootstrapRegisteredInPluginManifest() {
-		$plugin = elgg_get_plugin_from_id('hypeajax');
+		$plugin = \elgg_get_plugin_from_id('hypeajax');
 		$data = include $plugin->getPath() . 'elgg-plugin.php';
 		$this->assertArrayHasKey('bootstrap', $data);
 		$this->assertSame(Bootstrap::class, $data['bootstrap']);
@@ -88,24 +88,24 @@ class BootstrapTest extends IntegrationTestCase {
 	// --- Bootstrap::init hook wiring ---
 
 	public function testElggDataPageHookWired() {
-		$handlers = _elgg_services()->events->getAllHandlers();
+		$handlers = \_elgg_services()->events->getAllHandlers();
 		$this->assertArrayHasKey('elgg.data', $handlers);
 		$this->assertArrayHasKey('page', $handlers['elgg.data']);
 	}
 
 	public function testCapturePageContextHandlerRegistered() {
-		$registered = _elgg_services()->events->hasHandler('elgg.data', 'page', CapturePageContext::class);
+		$registered = \_elgg_services()->events->hasHandler('elgg.data', 'page', CapturePageContext::class);
 		$this->assertTrue($registered);
 	}
 
 	public function testViewVarsAllHookWired() {
-		$handlers = _elgg_services()->events->getAllHandlers();
+		$handlers = \_elgg_services()->events->getAllHandlers();
 		$this->assertArrayHasKey('view_vars', $handlers);
 		$this->assertArrayHasKey('all', $handlers['view_vars']);
 	}
 
 	public function testDeferViewRenderingHandlerRegistered() {
-		$registered = _elgg_services()->events->hasHandler('view_vars', 'all', DeferViewRendering::class);
+		$registered = \_elgg_services()->events->hasHandler('view_vars', 'all', DeferViewRendering::class);
 		$this->assertTrue($registered);
 	}
 
@@ -114,30 +114,30 @@ class BootstrapTest extends IntegrationTestCase {
 	public function testElggJsExtendedWithContextJs() {
 		// Bootstrap extends elgg.js with ajax/data/context.js so the client
 		// echoes captured context back on every /data request.
-		$views = _elgg_services()->views->getViewList('elgg.js');
+		$views = \_elgg_services()->views->getViewList('elgg.js');
 		$this->assertContains('ajax/data/context.js', $views);
 	}
 
 	public function testPlaceholderViewExists() {
 		// DeferViewRendering renders ajax/placeholder when a view is deferred.
-		$this->assertTrue(elgg_view_exists('ajax/placeholder'));
+		$this->assertTrue(\elgg_view_exists('ajax/placeholder'));
 	}
 
 	// --- route registration ---
 
 	public function testDeferredViewRouteRegistered() {
-		$route = _elgg_services()->routes->get('ajax:deferred');
+		$route = \_elgg_services()->routes->get('ajax:deferred');
 		$this->assertNotNull($route);
 		$this->assertSame('/_deferred/{view}', $route->getPath());
 	}
 
 	public function testDeferredViewRouteUsesController() {
-		$route = _elgg_services()->routes->get('ajax:deferred');
+		$route = \_elgg_services()->routes->get('ajax:deferred');
 		$this->assertSame(DeferredViewController::class, $route->getDefault('_controller'));
 	}
 
 	public function testDeferredViewRouteHasAjaxGatekeeper() {
-		$route = _elgg_services()->routes->get('ajax:deferred');
+		$route = \_elgg_services()->routes->get('ajax:deferred');
 		$middleware = (array) $route->getDefault('_middleware');
 		$this->assertContains(\Elgg\Router\Middleware\AjaxGatekeeper::class, $middleware);
 	}

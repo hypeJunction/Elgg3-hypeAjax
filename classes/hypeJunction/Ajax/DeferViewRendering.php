@@ -29,10 +29,10 @@ class DeferViewRendering {
 
 		unset($vars['deferred']);
 
-		$placeholder = elgg_extract('placeholder', $vars);
+		$placeholder = \elgg_extract('placeholder', $vars);
 		unset($vars['placeholder']);
 
-		$vars['__view_output'] = elgg_view('ajax/placeholder', [
+		$vars['__view_output'] = \elgg_view('ajax/placeholder', [
 			'view' => $hook->getType(),
 			'payload' => $vars,
 			'placeholder' => $placeholder,
