@@ -35,22 +35,22 @@ class ContextTest extends IntegrationTestCase {
 
 	public function testCaptureRecordsActivePageOwnerGuid() {
 		$captured = Context::capture();
-		$this->assertSame(elgg_get_page_owner_guid(), $captured['page_owner']);
+		$this->assertSame(\elgg_get_page_owner_guid(), $captured['page_owner']);
 	}
 
 	public function testCaptureRecordsActiveContextStack() {
-		elgg_push_context('hypeajax_test_ctx');
+		\elgg_push_context('hypeajax_test_ctx');
 		try {
 			$captured = Context::capture();
 			$this->assertContains('hypeajax_test_ctx', $captured['context_stack']);
 		} finally {
-			elgg_pop_context();
+			\elgg_pop_context();
 		}
 	}
 
 	public function testCaptureRecordsViewtype() {
 		$captured = Context::capture();
-		$this->assertSame(elgg_get_viewtype(), $captured['viewtype']);
+		$this->assertSame(\elgg_get_viewtype(), $captured['viewtype']);
 	}
 
 	public function testCaptureMacValidatesAgainstHmac() {
@@ -63,7 +63,7 @@ class ContextTest extends IntegrationTestCase {
 			$captured['viewtype'],
 			$captured['ts'],
 		]);
-		$this->assertTrue(elgg_build_hmac($payload)->matchesToken($captured['mac']));
+		$this->assertTrue(\elgg_build_hmac($payload)->matchesToken($captured['mac']));
 	}
 
 	public function testRestoreRoundTripAcceptsValidSignature() {
@@ -101,19 +101,19 @@ class ContextTest extends IntegrationTestCase {
 	public function testRestoreReplacesContextStackOnSuccess() {
 		// Capture a known stack, then change context, then restore — the
 		// stack should snap back to what was captured.
-		elgg_push_context('hypeajax_restore_target');
+		\elgg_push_context('hypeajax_restore_target');
 		$captured = Context::capture();
-		elgg_pop_context();
-		elgg_push_context('different_context');
+		\elgg_pop_context();
+		\elgg_push_context('different_context');
 
 		$request = $this->buildRequestWithContextParam('__context', $captured);
 		try {
 			Context::restore($request);
-			$this->assertContains('hypeajax_restore_target', elgg_get_context_stack());
-			$this->assertNotContains('different_context', elgg_get_context_stack());
+			$this->assertContains('hypeajax_restore_target', \elgg_get_context_stack());
+			$this->assertNotContains('different_context', \elgg_get_context_stack());
 		} finally {
 			// reset stack to a clean state regardless of test outcome
-			elgg_set_context_stack([]);
+			\elgg_set_context_stack([]);
 		}
 	}
 
