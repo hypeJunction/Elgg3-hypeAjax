@@ -68,7 +68,7 @@ class CapturePageContextTest extends IntegrationTestCase {
 			$context['viewtype'],
 			$context['ts'],
 		]);
-		$expected = elgg_build_hmac($payload)->getToken();
+		$expected = \elgg_build_hmac($payload)->getToken();
 		$this->assertSame($expected, $context['mac']);
 	}
 }

@@ -66,7 +66,7 @@ class DeferViewRenderingTest extends IntegrationTestCase {
 		// data-src URL so the client knows what to fetch. Render it
 		// directly and confirm the wiring rather than scraping markup
 		// from the hook.
-		$rendered = elgg_view('ajax/placeholder', [
+		$rendered = \elgg_view('ajax/placeholder', [
 			'view' => 'output/url',
 			'payload' => ['item_id' => 42],
 			'placeholder' => 'loading...',
@@ -79,7 +79,7 @@ class DeferViewRenderingTest extends IntegrationTestCase {
 		// placeholder.php returns early when the deferred view doesn't
 		// exist — protects against typos producing broken client-side
 		// fetches.
-		$rendered = elgg_view('ajax/placeholder', [
+		$rendered = \elgg_view('ajax/placeholder', [
 			'view' => 'this/view/does/not/exist',
 			'payload' => [],
 		]);
