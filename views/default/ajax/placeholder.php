@@ -38,9 +38,13 @@ echo elgg_format_element('div', [
 	'data-src' => $href,
 ], $placeholder ?: '');
 
+
+// Elgg 7 dropped the AMD loader: `require(['ajax/placeholder'], ...)` is a
+// ReferenceError in the browser. Import the ESM module and call init() from an
+// inline module script instead.
+elgg_import_esm('ajax/placeholder');
 ?>
-<script>
-	require(['ajax/placeholder'], function(ph) {
-		ph.init();
-	});
+<script type="module">
+	import ph from 'ajax/placeholder';
+	ph.init();
 </script>
